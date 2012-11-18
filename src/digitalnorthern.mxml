@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" preloader="preload.CustomPreloader"
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx" minWidth="955" minHeight="600" creationComplete="digitalnorthern_init();" xmlns:flexpaper="com.devaldi.controls.flexpaper.*">
+
+
+	<fx:Declarations><!---->
+		<mx:HTTPService id="httpService"
+						useProxy="false"  
+						resultFormat="text"
+						showBusyCursor="true"
+						fault="transcriptDataResultFault(event)"  
+						result="httpResults(event)" />
+		<mx:HTTPService id="serve_getConfigData" 
+						resultFormat="text"
+						url="digitalnorthern.json" 
+						result="handle_config_files(event)" />
+	</fx:Declarations>
+	<fx:Style source="style.css"/>
+	<fx:Script source="digitannorthernMain.as"/>
+	<flexpaper:FlexPaperViewer     id="swfviewer"   x="0" y="0"  width="100%" height="100%" Scale="2.6"  SwfFile="{swfPath}"/>
+
+	<!--<mx:SWFLoader source="http://v22.popgenie.org/digitalnortherntest/output/temp1797699986.pdf" width="100%" height="100%"/>
+	--><mx:Canvas right="0"  top="0"  id="draggableCanvas"  >
+		
+		<mx:Canvas backgroundAlpha="0.6"   showEffect="wipedown" hideEffect="wipeup" id="controlBox"  cornerRadius="5" horizontalScrollPolicy="off" verticalScrollPolicy="off"  right="0"  width="500" height="500" backgroundColor="#93d39a" >
+			<s:Label fontWeight="bold" id="casee"   y="5" text="Gene IDs:" top="7" x="15"/>
+			<s:TextArea   toolTip="{'Enter the correct input gene IDs'}" fontWeight="bold"  borderVisible="false"  focusColor="#000000" focusedTextSelectionColor="#FF9900"  color="#000000"  
+						  text=""
+						  
+						   id="inputTranscripttxt" width="481" height="199" top="24" x="10"/>
+		
+
+			
+			<mx:Form  layoutDirection="ltr" bottom="0" width="356" >
+				<mx:FormItem fontWeight="bold" label="Plot gene names?">
+					<mx:ComboBox change="submitbtnClick();" selectedIndex="1" id="genenames"  toolTip="{'Select the correct dropdown values related to input text area'}" styleName="radiusCBDropdown"   >
+						<mx:ArrayCollection>
+							<fx:Object label="Yes" data="TRUE"/>
+							<fx:Object label="No" data="FALSE"/>
+						</mx:ArrayCollection>
+					</mx:ComboBox>	
+	
+				</mx:FormItem>
+				<mx:FormItem fontWeight="bold" label="Plot dendrogram?">
+					<mx:ComboBox  change="submitbtnClick();" selectedIndex="1" id="plotdendrogram" styleName="radiusCBDropdown"   >
+						<mx:ArrayCollection>
+							<fx:Object label="Yes" data="TRUE"/>
+							<fx:Object label="No" data="FALSE"/>
+						</mx:ArrayCollection>
+					</mx:ComboBox>	
+				</mx:FormItem>
+				<mx:FormItem fontWeight="bold" label="Background colour">
+					<mx:ColorPicker  change="colourChange();" id="bgcpicker"/>
+				</mx:FormItem>
+				<mx:FormItem fontWeight="bold" label="Max genes for colour">
+					<s:HSlider  value="60" maximum="200" id="maxgenscale"  minimum="5" width="110"  stepSize="5"/>
+				</mx:FormItem>
+				<mx:FormItem fontWeight="bold" label="Min gene frequency">
+					<s:HSlider   maximum="20" id="mingenfq" value="1" minimum="0" width="110" stepSize="1"/>
+				</mx:FormItem>
+				<mx:FormItem fontWeight="bold" label="Clustering method">
+					<mx:ComboBox  change="submitbtnClick();" id="clustermethod" selectedIndex="0"   styleName="radiusCBDropdown"   >
+						<mx:ArrayCollection>
+							<fx:Object label="Average" data="average"/>
+							<fx:Object label="Complete" data="complete"/>
+							<fx:Object label="Median" data="median"/>
+							<fx:Object label="Centroid" data="centroid"/>
+							<fx:Object label="Single" data="single"/>
+							<fx:Object label="Ward" data="ward"/>
+							<fx:Object label="McQuitty" data="mcquitty"/>
+							
+						</mx:ArrayCollection>
+					</mx:ComboBox>
+				</mx:FormItem> 
+				<mx:FormItem fontWeight="bold" label="Distance method">
+					<mx:ComboBox  change="submitbtnClick();" selectedIndex="0" id="euclideanmedthod"  styleName="radiusCBDropdown"   >
+						<mx:ArrayCollection>
+							<fx:Object label="Euclidean" data="euclidean"/>
+							<fx:Object label="Maximum" data="maximum"/>
+							<fx:Object label="Manhattan" data="manhattan"/>
+							<fx:Object label="Canberra" data="canberra"/>
+							<fx:Object label="Binary" data="binary"/>
+							<fx:Object label="Minkowski" data="minkowski"/>
+					
+							 
+						</mx:ArrayCollection>
+					</mx:ComboBox>
+				</mx:FormItem>
+				<mx:FormItem textAlign="left" fontWeight="bold" label="Correlation method">
+					<mx:ComboBox  change="submitbtnClick();" selectedIndex="0" id="corrmethod"   styleName="radiusCBDropdown"   >
+						<mx:ArrayCollection>
+							<fx:Object label="Pearson" data="pearson"/>
+							<fx:Object label="Kendall" data="kendall"/>
+							<fx:Object label="Spearman" data="spearman"/>
+	
+							
+							
+						</mx:ArrayCollection>
+					</mx:ComboBox>
+				</mx:FormItem>
+				<mx:FormItem textAlign="right" fontWeight="bold" >
+					<mx:Button click="submitbtnClick();" label="Submit"/>
+				</mx:FormItem>
+			</mx:Form>
+			
+			
+		
+		<mx:Button id="closeButton" buttonMode="true" click="{controlBox.visible=false;}"  styleName="closeButton" useHandCursor="true"  bottom="2" right="0" icon="@Embed(source='assets/up.png')"/>
+		<mx:LinkButton visible="{(swfPath!=demoswf)?true:false}" x="360" click="downloadpdf();" y="231" label="Download PDF" fontWeight="bold"/>
+			<mx:Label visible="{(swfPath!=demoswf)?true:false}" x="6"  y="226" text="{'Number of genes: '+ genecountsArr.length.toString()}" />
+			
+			
+			<mx:Text toolTip="{versiontxt.text}" id="versiontxt" top="3" right="30" fontSize="10" fontFamily="gillsans" text="{'Updated: 2012/09/29/ 06:40:00'}" />
+			<mx:Image left="86" click="navigatetohelppage();" top="1"  buttonMode="true" source="@Embed(source='assets/helpme.png')"/>
+			<mx:Image  toolTip="Click and drag control window" mouseDown="{draggableCanvas.startDrag()}" mouseUp="{draggableCanvas.stopDrag()}" left="66" source="@Embed(source='assets/moveme.png')"/>
+
+		</mx:Canvas>
+		<mx:Image showEffect="wipedown" hideEffect="wipeup" width="25" toolTip="Show Control" height="25" buttonMode="true" right="0" source="@Embed(source='assets/down.png')" visible="{!controlBox.visible}" click="{controlBox.visible=true;}" y="-2"/>
+		<mx:Image  click="runDemoData();" id="rundemo" showEffect="wipedown" hideEffect="wipeup" visible="{controlBox.visible  &amp;&amp; (swfPath==demoswf) }"   toolTip="Run Demo Data"  buttonMode="true" right="490" y="-4" source="@Embed(source='assets/call.png')" />
+
+		
+		<mx:Button  toolTip="Click and drag control window" mouseDown="{draggableCanvas.startDrag()}" mouseUp="{draggableCanvas.stopDrag()}" width="100%" height="15" alpha="0" top="0" label="drag"/>
+		</mx:Canvas>
+	
+</s:Application>

@@ -1,0 +1,146 @@
+/* CSS file */
+@namespace s "library://ns.adobe.com/flex/spark";
+@namespace mx "library://ns.adobe.com/flex/mx";
+@font-face { 
+	src: url("COUR.TTF"); 
+	fontFamily: btFontFamily; 
+	embedAsCFF: false; 
+	color:#00ff00;
+}
+@font-face { 
+	src: url("GillSans_Regular.ttf"); 
+	fontFamily: gillsans; 
+	embedAsCFF: false; 
+	color:#000000;
+}
+.textareafont{
+	fontFamily: btFontFamily;
+	font-size:12;
+	font-thickness:200;
+	font-sharpness:-50;
+	font-grid-fit-type:subpixel;
+}
+.closeButton {
+	icon: Embed(source="/assets/close.png");
+	skin: ClassReference(null); 
+}
+
+
+/*
+s|RadioButton{
+	font-weight:bold;
+}
+mx|CheckBox{
+	font-weight:bold;
+}
+mx|RadioButton{
+	font-weight:bold;
+}
+mx|AdvancedDataGrid{
+	
+	border-style: none;
+	selection-color: #FFFFFF;
+	roll-over-color: #C1FFC5;
+	alternating-item-colors: #F4FBFF, #FFFFFF;
+
+}
+.goTextArea{
+	font-weight:bold;
+	selection-color: #7CFF77;
+	roll-over-color: #C1FFC5;
+	text-roll-over-color:#7CFF77;
+	
+		
+	}
+mx|AdvancedDataGrid{
+	
+	fontFamily: gillsans;
+	font-size:12;
+	font-thickness:-105;
+	font-sharpness:-400;
+	font-anti-alias-type:advanced;
+}*/
+.goTextArea{
+	font-weight:bold;
+
+	
+}
+.textareaextendfont{
+	fontFamily: gillsans;
+	font-size:12;
+	font-thickness:-105;
+	font-sharpness:-400;
+	font-anti-alias-type:advanced;
+}
+
+.extendedDataGrid{
+	/*background-attachment:Embed(source="/preload/welcomes.png");
+	background-image:Embed(source="/preload/welcomes.png");*/
+	content-background-color:#FF0000;
+	background-color:#FF0000;
+	fontFamily: gillsans;
+	font-size:12;
+	font-thickness:-105;
+	font-sharpness:-400;
+	font-anti-alias-type:advanced;
+}
+
+.radiusCBDropdown {
+	height: 2000;
+}   
+mx|ToolTip {
+	fontFamily: gillsans;
+	font-size:13;
+	font-thickness:-105;
+	font-sharpness:-400;
+	font-anti-alias-type:advanced;
+	background-color: #6C9270;
+	color:#ffffff;	
+}
+/*mx|CursorManager
+{
+	busyCursor: ClassReference("mx.skins.halo.BusyCursor");
+	busyCursorBackground: Embed(source="preload/welcomes.png");
+}*/
+
+
+mx|TitleWindow{
+	
+	borderAlpha: 1;
+	borderColor: haloSilver;
+	backgroundColor: haloSilver;
+	cornerRadius: 0;
+	
+}
+
+.titleerrorstyle{
+	
+	color:red;
+	font-size:14px;
+	font-thickness:-105;
+	font-sharpness:-400;
+	font-anti-alias-type:advanced;
+}
+
+
+
+.titleexportstyle{
+	
+	color:#000000;
+	font-size:14px;
+	font-thickness:-105;
+	font-sharpness:-400;
+	font-anti-alias-type:advanced;
+}
+/*s|CheckBox {
+	skinClass: ClassReference("AHCheckboxSkin");
+	symbolColorChecked: "0x70d000";
+	symbolColorUnchecked: "0xe83800";
+	fontSize: "12";
+	font-weight:bold;
+	color: "0x000000";
+}
+
+.default {
+	skinClass: ClassReference("spark.skins.spark.CheckBoxSkin");
+}*/
